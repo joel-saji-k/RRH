@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../assets/img/img/favicon.png" rel="icon">
+    <title>Bootstrap Payment Form</title>
+    <!-- CSS Links -->
+    <link href="../assets/assets2/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/assets2/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/assets2/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/assets2/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="../assets/assets2/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="../assets/assets2/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../assets/assets2/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  
+    <style>
+        body {
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            background-color: #eee;
+            background-image: url("https://cdn.searchenginejournal.com/wp-content/uploads/2020/03/the-top-10-most-popular-online-payment-solutions-5e9978d564973-1520x800.png");
+        }
+        .launch {
+            height: 50px;
+        }
+        .close {
+            font-size: 21px;
+            cursor: pointer;
+        }
+        .modal-body {
+            height: 450px;
+        }
+        .nav-tabs {
+            border: none !important;
+        }
+        .nav-tabs .nav-link.active {
+            color: #495057;
+            background-color: #fff;
+            border-color: #ffffff #ffffff #fff;
+            border-top: 3px solid blue !important;
+        }
+        .nav-tabs .nav-link {
+            margin-bottom: -1px;
+            border: 1px solid transparent;
+            border-top-left-radius: 0rem;
+            border-top-right-radius: 0rem;
+            border-top: 3px solid #eee;
+            font-size: 20px;
+        }
+        .nav-tabs .nav-link:hover {
+            border-color: #e9ecef #ffffff #ffffff;
+        }
+        .nav-tabs {
+            display: table !important;
+            width: 100%;
+        }
+        .nav-item {
+            display: table-cell;
+        }
+        .form-control {
+            border-bottom: 1px solid #eee !important;
+            border: none;
+            font-weight: 600;
+        }
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #8bbafe;
+            outline: 0;
+            box-shadow: none;
+        }
+        .inputbox {
+            position: relative;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .inputbox span {
+            position: absolute;
+            top: 7px;
+            left: 11px;
+            transition: 0.5s;
+        }
+        .inputbox i {
+            position: absolute;
+            top: 13px;
+            right: 8px;
+            transition: 0.5s;
+            color: #3F51B5;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .inputbox input:focus ~ span,
+        .inputbox input:valid ~ span {
+            transform: translateX(-0px) translateY(-15px);
+            font-size: 12px;
+        }
+        .pay button {
+            height: 47px;
+            position: absolute;
+            padding-left: 50%;
+            border-radius: 37px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <div class="card">
+                    <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center" style="padding-top: 5%">
+                <h1 class="display-6"><b>Payment Method</b></h1>
+            </div>
+        </div>
+                    <div class="card-header">
+                        <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2" style="padding-left: 10px;padding-right: 10px">
+                            <!-- Credit card form tabs -->
+                            <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3">
+                                <li class="nav-item ">
+                                    <a data-toggle="pill" href="#credit-card" class="nav-link active">
+                                        <i class="bi bi-credit-card"></i> Credit Card
+                                    </a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    <a data-toggle="pill" href="#net-banking" class="nav-link">
+                                        <i class="fas fa-mobile-alt mr-2"></i> Net Banking
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Credit card form content -->
+                        <div class="tab-content">
+                            <!-- credit card info-->
+                            <div id="credit-card" class="tab-pane fade show active pt-3">
+                                <form role="form" onsubmit="event.preventDefault()">
+                                    <div class="form-group">
+                                        <label for="username">
+                                            <h6>Card Owner</h6>
+                                        </label>
+                                        <input type="text" name="username" placeholder="Card Owner Name" required class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cardNumber">
+                                            <h6>Card number</h6>
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="text" id="cardNumber" placeholder="1234 5678 9012" class="form-control" required maxlength="14" oninput="formatCardNumber(this)">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text text-muted">
+                                                    
+<i class="bi bi-credit-card"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+    <label>
+        <h6>Expiration Date</h6>
+    </label>
+    <label style="padding-left: 50% ">
+        <h6>CVV</h6>
+    </label>
+    <div class="row">
+        <div class="col-4 form-group">
+            <input type="text" id="expiryMonth" placeholder="MM" class="form-control" maxlength="2" oninput="moveToNext(this, 'expiryYear')" required>
+        </div>
+        <div class="col-4 form-group">
+            <input type="text" id="expiryYear" placeholder="YY" class="form-control" maxlength="2" required>
+        </div>
+
+        <div class="col-4 form-group">
+                    
+            <input type="text" id="cvv" placeholder="CVV" class="form-control" maxlength="4" required>
+        </div>
+
+                                             
+
+                                        </div>
+                                    </div>
+                                    <div class="card-footer" >
+                                        <button type="button" class="subscribe btn btn-primary btn-block shadow-sm" style="width: 100%" onclick="window.location.href='payment_success.html'">Confirm Payment</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- bank transfer info -->
+                            <div id="net-banking" class="tab-pane fade pt-3">
+                                <div class="form-group">
+                                    <label for="Select Your Bank">
+                                        <h6>Enter UPID</h6>
+                                    </label>
+                                    <input type="text" name="ipid" placeholder="abc@cdf" required class="form-control">
+                                    <label for="Select Your Bank">
+                                        <h6>Enter Password</h6>
+                                    </label>
+                                    <input type="text" name="ipid" placeholder="" required class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <p style="padding-top: 10px">
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href='payment_success.html'">
+<i class="bi bi-phone" ></i> Proceed Payment
+                                        </button>
+                                    </p>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Links -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+         function formatCardNumber(input) {
+        // Remove all non-digit characters
+        let cardNumber = input.value.replace(/\D/g, '');
+
+        // Limit to maximum 12 digits
+        if (cardNumber.length > 12) {
+            cardNumber = cardNumber.substring(0, 12);
+        }
+
+        // Format into groups of 4 digits
+        input.value = cardNumber.replace(/(\d{4})(?=\d)/g, '$1 ');
+    }
+     function moveToNext(current, nextFieldID) {
+        if (current.value.length === current.maxLength) {
+            document.getElementById(nextFieldID).focus();
+        }
+    }
+    </script>
+</body>
+</html>
